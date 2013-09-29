@@ -1,0 +1,6 @@
+Source: Missouri Census Data Center
+URL: http://mcdc.missouri.edu/pub/data/georef/zcta_master.Metadata.html
+Date: Sun 29 Sep 2013 12:20:20 PM EDT
+Exported using Dexter: zcta5,ZIPName,IntPtLat,IntPtLon.
+First two lines, headers, removed.
+
