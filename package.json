@@ -1,18 +1,18 @@
 {
-  "name": "foo",
+  "name": "rwthr",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  "main": "app.js",
   "license": "AGPL",
   "dependencies": {
     "async": "~0.2.9",
+    "connect-flash": "~0.1.1",
     "csv": "~0.3.6",
+    "express": "~3.4.2",
     "iconv-lite": "~0.2.11",
     "kdt": "~0.1.0",
+    "redis": "~0.9.0",
+    "request": "~2.27.0",
+    "swig": "~1.1.0",
     "xml2js": "~0.2.8"
   }
 }
