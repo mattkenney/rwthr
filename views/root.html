@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html id="ng-app" ng-app="weatherApp">
+<head>
+<meta charset="utf-8" />
+<title>rwthr</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
+<![endif]-->
+<style type="text/css">
+.nav,.pagination,.carousel a{cursor:pointer;}
+#main{margin-left:auto;margin-right:auto;margin-top:70px;overflow:hidden;width:598px}
+.rr-label{text-align:right;width:9em;}
+.rr-label:after{content:":";}
+.rr-radar{overflow:hidden;}
+#radar{height:550px;margin:-10px;width:600px;}
+@media/*!*/(max-width:767px)
+{
+#main{width:300px;}
+#radar{height:275px;margin:-9px;width:300px;}
+}
+</style>
+</head>
+<body ng-controller="WeatherCtrl">
+<div class="navbar navbar-default navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<a class="navbar-brand">mwthr</a>
+</div>
+</div>
+</div>
+<div class="container">
+<div id="main">
+<table class="rr-table table table-striped table-bordered table-hover">
+<tbody>
+<tr><td class="rr-label">Location</td><td>{{place.name}}</td></tr>
+<tr><td class="rr-label">Now</td><td>{{observation.temperature_string}}</td></tr>
+<tr><td class="rr-radar" colspan="2"><img alt="" id="radar" ng-src="{{radar}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==" /></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript">
+var weatherApp = angular.module('weatherApp', ['ui.bootstrap', 'ngResource']);
+
+weatherApp.controller('WeatherCtrl', function ($scope, $resource)
+{
+    function locate(position)
+    {
+        var radar = '/api/radar';
+        if (position && position.coords)
+        {
+            var where = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude
+            };
+            radar += '?lat=' + encodeURIComponent(position.coords.latitude);
+            radar += '&lon=' + encodeURIComponent(position.coords.longitude);
+        }
+
+        $scope.$apply(function ()
+        {
+            $scope.place = $resource('/api/place').get(where);
+            $scope.observation = $resource('/api/observation').get(where);
+            $scope.radar = radar;
+
+            $resource('/api/forecast').get(where);
+        });
+    }
+
+    if (navigator.geolocation)
+    {
+        var options = {
+            maximumAge: 30 * 60 * 1000,
+            timeout: 5000
+        };
+        navigator.geolocation.getCurrentPosition(locate, locate, options);
+    }
+    else
+    {
+        locate($scope);
+    }
+});
+</script>
+</body>
+</html>

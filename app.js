@@ -49,6 +49,7 @@ app.use(function(req, res, next)
 // ***** Controllers *****
 
 require('./controllers/api')(app);
+require('./controllers/root')(app);
 
 // ***** Error handling *****
 

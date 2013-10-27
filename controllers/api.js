@@ -1,6 +1,5 @@
 var weather = require('../lib/weather')
 ,   locator = require('../lib/locator')
-,   xml2js = require('xml2js')
 ;
 
 module.exports = function (app)
@@ -19,7 +18,7 @@ module.exports = function (app)
         locator.forecast(req.query, function (err, data)
         {
             if (err) return next(err);
-            weather(data, function (err, data)
+            weather.forecast(data, function (err, data)
             {
                 if (err) return next(err);
                 res.send(data);
@@ -32,7 +31,7 @@ module.exports = function (app)
         locator.observation(req.query, 3, function (err, data)
         {
             if (err) return next(err);
-            weather(data, function (err, data)
+            weather.observation(data, function (err, data)
             {
                 if (err) return next(err);
                 res.send(data);
