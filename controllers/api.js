@@ -1,9 +1,12 @@
-var weather = require('../lib/weather')
+var geoip = require('../lib/geoip')
 ,   locator = require('../lib/locator')
+,   weather = require('../lib/weather')
 ;
 
 module.exports = function (app)
 {
+    app.use('/api/', geoip);
+
     app.get('/api/county', function (req, res)
     {
         locator.county(req.query, function (err, data)
@@ -19,6 +22,19 @@ module.exports = function (app)
         {
             if (err) return next(err);
             weather.forecast(data, function (err, data)
+            {
+                if (err) return next(err);
+                res.send(data);
+            });
+        });
+    });
+
+    app.get('/api/graph', function (req, res, next)
+    {
+        locator.graph(req.query, function (err, data)
+        {
+            if (err) return next(err);
+            weather.graph(data, function (err, data)
             {
                 if (err) return next(err);
                 res.send(data);
@@ -56,5 +72,17 @@ module.exports = function (app)
             res.redirect(data[0][0].url);
         });
     });
-};
 
+    app.get('/api/range', function (req, res, next)
+    {
+        locator.forecast(req.query, function (err, data)
+        {
+            if (err) return next(err);
+            weather.range(data, function (err, data)
+            {
+                if (err) return next(err);
+                res.send(data);
+            });
+        });
+    });
+};
