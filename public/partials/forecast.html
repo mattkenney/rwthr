@@ -1,0 +1,15 @@
+<div class="container">
+<div class="rr-main">
+<table class="rr-table table table-striped table-bordered table-hover">
+<tbody>
+<tr><td class="rr-label">Location</td><td>{{place.name}}</td></tr>
+<tr><td class="rr-label">Now</td><td><span ng-show="observation.temp_f">{{observation.temp_f}} &#176;F</span></td></tr>
+<tr><td class="rr-label">Next 24 hours</td><td><span ng-show="range.temperature">{{range.temperature}} &#176;F,
+{{range.probability_of_precipitation}}% <span title="probability of precipitation">PoP</span></span></td></tr>
+<tr><td class="rr-image" colspan="2">
+<img alt="{{image.alt}}" ng-class="image.classname" ng-src="{{image.src}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==" />
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>

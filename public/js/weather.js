@@ -1,4 +1,104 @@
-var weatherApp = angular.module('weatherApp', ['ui.bootstrap', 'ngResource']);
+var weatherApp = angular.module('weatherApp', ['ui.bootstrap', 'ngResource', 'ngRoute']);
+
+weatherApp.config(['$routeProvider', function($routeProvider)
+{
+    $routeProvider
+        .when('/',
+        {
+            templateUrl: 'partials/forecast.html',
+            controller: 'RadarCtrl'
+        })
+        .when('/fiveday',
+        {
+            templateUrl: 'partials/forecast.html',
+            controller: 'FiveDayCtrl'
+        })
+        .when('/atlantic',
+        {
+            templateUrl: 'partials/forecast.html',
+            controller: 'AtlanticCtrl'
+        })
+        .when('/pacific',
+        {
+            templateUrl: 'partials/forecast.html',
+            controller: 'PacificCtrl'
+        })
+        .otherwise(
+        {
+            redirectTo: '/'
+        })
+        ;
+}]);
+
+weatherApp.controller('AtlanticCtrl', function ($scope)
+{
+    $scope.image =
+    {
+        alt: 'Atlantic outlook',
+        classname: 'rr-tropic',
+        src: 'http://www.nhc.noaa.gov/tafb_latest/danger_atl_latestBW_sm2.gif'
+    };
+});
+
+weatherApp.controller('FiveDayCtrl', function ($scope)
+{
+    $scope.image =
+    {
+        alt: '5 Day',
+        classname: 'rr-graph',
+        src: $scope.graph.url
+    };
+});
+
+weatherApp.controller('NavBarCtrl', function ($scope, $location)
+{
+    var isCollapse = true;
+
+    var updateDiv = function ()
+    {
+        $scope.navBar.div =
+        {
+            'navbar-collapse':true,
+            collapse:!!isCollapse
+        };
+    };
+
+    $scope.navBar =
+    {
+        li: function (path)
+        {
+            return ($location.path() == path) ? 'active' : '';
+        },
+
+        toggle: function (value)
+        {
+            isCollapse = (value === false) || ((value === true) ? false : !isCollapse);
+            updateDiv();
+        }
+    };
+
+    updateDiv();
+});
+
+weatherApp.controller('PacificCtrl', function ($scope)
+{
+    $scope.image =
+    {
+        alt: 'Pacific outlook',
+        classname: 'rr-tropic',
+        src: 'http://www.nhc.noaa.gov/tafb_latest/danger_pac_latestBW_sm2.gif'
+    };
+});
+
+weatherApp.controller('RadarCtrl', function ($scope)
+{
+    $scope.image =
+    {
+        alt: 'Radar',
+        classname: 'rr-radar',
+        src: $scope.radar
+    };
+});
 
 weatherApp.controller('WeatherCtrl', function ($scope, $resource)
 {
@@ -44,30 +144,4 @@ weatherApp.controller('WeatherCtrl', function ($scope, $resource)
         navigator.geolocation.getCurrentPosition(locate, null, options);
     }
 
-    var isNavBarCollapsed = true;
-    $scope.navBar = {
-        toggle: function ()
-        {
-            isNavBarCollapsed = !isNavBarCollapsed;
-        },
-
-        classes: function ()
-        {
-            return  {
-                'navbar-collapse':true,
-                collapse:!!isNavBarCollapsed
-            };
-        },
-
-        click: function (mode)
-        {
-            $scope.mode = mode;
-            isNavBarCollapsed = true;
-        },
-
-        linkClass: function (mode)
-        {
-            return ($scope.mode == mode) ? 'active' : '';
-        }
-    };
 });

@@ -12,12 +12,12 @@
 <style type="text/css">
 .nav,.pagination,.carousel a{cursor:pointer;}
 .rr-graph{height:500px;margin:-6px;width:592px;}
-.rr-image{overflow:hidden;}
+.rr-image{overflow:hidden;width:580px;}
 .rr-label:after{content:":";}
 .rr-label{text-align:right;width:9em;}
 .rr-main{margin-left:auto;margin-right:auto;margin-top:70px;overflow:hidden;width:598px}
 .rr-radar{height:550px;margin:-10px;width:600px;}
-.rr-tropic{border:1px solid #ddd;margin:39px;}
+.rr-tropic{border:1px solid #ddd;height:402px;margin:39px;width:502px;}
 @media/*!*/(max-width:767px)
 {
 .rr-graph{height:250px;margin:-7px;width:296px;}
@@ -28,45 +28,33 @@
 </style>
 </head>
 <body ng-controller="WeatherCtrl">
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="NavBarCtrl">
 <div class="container">
 <div class="navbar-header">
-<button type="button"class="navbar-toggle" ng-click="navBar.toggle()">
+<button type="button" class="navbar-toggle" ng-click="navBar.toggle()">
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" ng-click="navBar.click()">mwthr</a>
+<a class="navbar-brand" href="#/" ng-click="navBar.toggle(false)">mwthr</a>
 </div>
-<div class="collapse navbar-collapse" ng-class="navBar.classes()">
+<div class="collapse navbar-collapse" ng-class="navBar.div">
 <ul class="nav navbar-nav">
-<li ng-class="navBar.linkClass()"><a ng-click="navBar.click()">Radar</a></li>
-<li ng-class="navBar.linkClass('fiveday')"><a ng-click="navBar.click('fiveday')">5 Day</a></li>
-<li ng-class="navBar.linkClass('atlantic')"><a ng-click="navBar.click('atlantic')">Atlantic</a></li>
-<li ng-class="navBar.linkClass('pacific')"><a ng-click="navBar.click('pacific')">Pacific</a></li>
+<li ng-class="navBar.li('/')"><a href="#/" ng-click="navBar.toggle(false)">Radar</a></li>
+<li ng-class="navBar.li('/fiveday')"><a href="#/fiveday" ng-click="navBar.toggle(false)">5 Day</a></li>
+<li ng-class="navBar.li('/atlantic')"><a href="#/atlantic" ng-click="navBar.toggle(false)">Atlantic</a></li>
+<li ng-class="navBar.li('/pacific')"><a href="#/pacific" ng-click="navBar.toggle(false)">Pacific</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li ng-class="navBar.li('#/about')"><a href="#/about" ng-click="navBar.toggle(false)">About</a></li>
 </ul>
 </div>
 </div>
 </div>
-<div class="container">
-<div class="rr-main">
-<table class="rr-table table table-striped table-bordered table-hover">
-<tbody>
-<tr><td class="rr-label">Location</td><td>{{place.name}}</td></tr>
-<tr><td class="rr-label">Now</td><td><span ng-show="observation.temp_f">{{observation.temp_f}} &#176;F</span></td></tr>
-<tr><td class="rr-label">Next 24 hours</td><td><span ng-show="range.temperature">{{range.temperature}} &#176;F, {{range.probability_of_precipitation}}% <span title="probability of precipitation">PoP</span></span></td></tr>
-</tbody>
-<tbody ng-switch="mode">
-<tr ng-switch-default=""><td class="rr-image" colspan="2"><img alt="Radar" class="rr-radar" ng-src="{{radar}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==" /></td></tr>
-<tr ng-switch-when="fiveday"><td class="rr-image" colspan="2"><img alt="5 day" class="rr-graph" ng-src="{{graph.url}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==" /></td></tr>
-<tr ng-switch-when="atlantic"><td class="rr-image" colspan="2"><img alt="Atlantic" class="rr-tropic" src="http://www.nhc.noaa.gov/tafb_latest/danger_atl_latestBW_sm2.gif" /></td></tr>
-<tr ng-switch-when="pacific"><td class="rr-image" colspan="2"><img alt="Pacific" class="rr-tropic" src="http://www.nhc.noaa.gov/tafb_latest/danger_pac_latestBW_sm2.gif" /></td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
+<div ng-view=""></div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-route.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.js"></script>
 <script src="/js/weather.js"></script>
 </body>
