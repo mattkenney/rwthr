@@ -2,28 +2,29 @@
 <html id="ng-app" ng-app="weatherApp">
 <head>
 <meta charset="utf-8" />
+<!-- @source:https://github.com/mattkenney/rwthr -->
 <title>mwthr</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="stylesheet" />
-<!--[if lt IE 9]>
-<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
-<![endif]-->
 <style type="text/css">
+body{padding-top:70px;}
 .nav,.pagination,.carousel a{cursor:pointer;}
-.rr-graph{height:500px;margin:-6px;width:592px;}
-.rr-image{overflow:hidden;width:580px;}
-.rr-label:after{content:":";}
-.rr-label{text-align:right;width:9em;}
-.rr-main{margin-left:auto;margin-right:auto;margin-top:70px;overflow:hidden;width:598px}
-.rr-radar{height:550px;margin:-10px;width:600px;}
-.rr-tropic{border:1px solid #ddd;height:402px;margin:39px;width:502px;}
+.mw-about{text-align:center;}
+.mw-graph{height:500px;margin:-6px;width:592px;}
+.mw-icon{height:80px;text-align:center;width:80px;}
+.mw-image{overflow:hidden;width:580px;}
+.mw-label:after{content:":";}
+.mw-label{text-align:right;width:9em;}
+.mw-loading{color:#ddd;font-variant:italic;}
+.mw-main{margin-left:auto;margin-right:auto;overflow:hidden;width:598px}
+.mw-radar{height:550px;margin:-10px;width:600px;}
+.mw-tropic{border:1px solid #ddd;height:402px;margin:39px;width:502px;}
 @media/*!*/(max-width:767px)
 {
-.rr-graph{height:250px;margin:-7px;width:296px;}
-.rr-main{width:300px;}
-.rr-radar{height:275px;margin:-9px;width:300px;}
-.rr-tropic{height:202px;margin:14px;width:252px;}
+.mw-graph{height:250px;margin:-7px;width:296px;}
+.mw-main{width:300px;}
+.mw-radar{height:275px;margin:-9px;width:300px;}
+.mw-tropic{height:202px;margin:14px;width:252px;}
 }
 </style>
 </head>
@@ -46,16 +47,16 @@
 <li ng-class="navBar.li('/pacific')"><a href="#/pacific" ng-click="navBar.toggle(false)">Pacific</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
-<li ng-class="navBar.li('#/about')"><a href="#/about" ng-click="navBar.toggle(false)">About</a></li>
+<li ng-class="navBar.li('/about')"><a href="#/about" ng-click="navBar.toggle(false)">About</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div ng-view=""></div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-resource.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-route.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-resource.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-route.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
 <script src="/js/weather.js"></script>
 </body>
 </html>

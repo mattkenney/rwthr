@@ -1,17 +1,18 @@
 #!/usr/bin/env nodejs
 
 var credentials = require('./credentials'),
+    ejs = require('ejs'),
     express = require('express'),
     flash = require('connect-flash'),
-    swig = require('swig'),
     app = express();
 
 // ***** Initialization *****
 
 app.enable('trust proxy');
-app.engine('html', swig.renderFile);
+app.engine('.html', ejs.__express);
 
-app.set('view cache', false);
+//app.set('view cache', false);
+app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
@@ -79,7 +80,7 @@ app.use(function (err, req, res, next)
 
 // ***** Server *****
 
-app.listen(3000);
+app.listen(app.get('port'));
 
-console.log('Listening on port 3000');
+console.log('Listening on port ' + app.get('port'));
 

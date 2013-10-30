@@ -23,6 +23,10 @@ weatherApp.config(['$routeProvider', function($routeProvider)
             templateUrl: 'partials/forecast.html',
             controller: 'PacificCtrl'
         })
+        .when('/about',
+        {
+            templateUrl: 'partials/about.html'
+        })
         .otherwise(
         {
             redirectTo: '/'
@@ -35,7 +39,7 @@ weatherApp.controller('AtlanticCtrl', function ($scope)
     $scope.image =
     {
         alt: 'Atlantic outlook',
-        classname: 'rr-tropic',
+        classname: 'mw-tropic',
         src: 'http://www.nhc.noaa.gov/tafb_latest/danger_atl_latestBW_sm2.gif'
     };
 });
@@ -45,7 +49,7 @@ weatherApp.controller('FiveDayCtrl', function ($scope)
     $scope.image =
     {
         alt: '5 Day',
-        classname: 'rr-graph',
+        classname: 'mw-graph',
         src: $scope.graph.url
     };
 });
@@ -85,7 +89,7 @@ weatherApp.controller('PacificCtrl', function ($scope)
     $scope.image =
     {
         alt: 'Pacific outlook',
-        classname: 'rr-tropic',
+        classname: 'mw-tropic',
         src: 'http://www.nhc.noaa.gov/tafb_latest/danger_pac_latestBW_sm2.gif'
     };
 });
@@ -95,7 +99,7 @@ weatherApp.controller('RadarCtrl', function ($scope)
     $scope.image =
     {
         alt: 'Radar',
-        classname: 'rr-radar',
+        classname: 'mw-radar',
         src: $scope.radar
     };
 });
