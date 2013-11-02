@@ -83,9 +83,15 @@ weatherApp.controller('NavBarCtrl', ['$scope', '$location', '$window', function 
 
     updateDiv();
 
+    var lastPath;
     $scope.$on('$routeChangeSuccess', function(event)
     {
-        $window.ga('send', 'pageview', $location.path());
+        var path = $location.path();
+        if (lastPath !== path)
+        {
+            lastPath = path;
+            $window.ga('send', 'pageview', path);
+        }
     });
 }]);
 
@@ -152,5 +158,4 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $
         };
         navigator.geolocation.getCurrentPosition(locate, null, options);
     }
-
 }]);
