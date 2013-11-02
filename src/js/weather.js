@@ -54,7 +54,7 @@ weatherApp.controller('FiveDayCtrl', ['$scope', function ($scope)
     };
 }]);
 
-weatherApp.controller('NavBarCtrl', ['$scope', '$location', function ($scope, $location)
+weatherApp.controller('NavBarCtrl', ['$scope', '$location', function ($scope, $location, $window)
 {
     var isCollapse = true;
 
@@ -82,6 +82,11 @@ weatherApp.controller('NavBarCtrl', ['$scope', '$location', function ($scope, $l
     };
 
     updateDiv();
+
+    $scope.$on('$routeChangeSuccess', function(event)
+    {
+        $window.ga('send', 'pageview', $location.path());
+    });
 }]);
 
 weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
