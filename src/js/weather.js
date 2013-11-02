@@ -54,7 +54,7 @@ weatherApp.controller('FiveDayCtrl', ['$scope', function ($scope)
     };
 }]);
 
-weatherApp.controller('NavBarCtrl', ['$scope', '$location', function ($scope, $location, $window)
+weatherApp.controller('NavBarCtrl', ['$scope', '$location', '$window', function ($scope, $location, $window)
 {
     var isCollapse = true;
 
