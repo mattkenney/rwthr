@@ -3,7 +3,7 @@ var weatherApp = angular.module('weatherApp', ['ui.bootstrap', 'ngResource', 'ng
 weatherApp.config(['$routeProvider', function($routeProvider)
 {
     $routeProvider
-        .when('/',
+        .when('/radar',
         {
             templateUrl: 'partials/forecast.html',
             controller: 'RadarCtrl'
@@ -29,7 +29,7 @@ weatherApp.config(['$routeProvider', function($routeProvider)
         })
         .otherwise(
         {
-            redirectTo: '/'
+            redirectTo: '/radar'
         })
         ;
 }]);
