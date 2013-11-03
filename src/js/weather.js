@@ -123,7 +123,7 @@ weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
     };
 }]);
 
-weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $resource)
+weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function ($scope, $resource, $window)
 {
     $scope.move = function (where)
     {
@@ -142,6 +142,15 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $
         $scope.range = $resource('/api/range').get(param);
         $scope.graph = $resource('/api/graph').get(param);
         $scope.radar = radar;
+
+        if (where && where.name)
+        {
+            $window.localStorage.setItem("WeatherCtrl.where", JSON.stringify(where));
+        }
+        else
+        {
+            $window.localStorage.removeItem("WeatherCtrl.where");
+        }
     };
 
     $scope.locate = function ()
@@ -171,20 +180,34 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $
         }
     };
 
-    $scope.locate();
+    $scope.load = function ()
+    {
+        var json = $window.localStorage.getItem("WeatherCtrl.where");
+        if (json)
+        {
+            var where = JSON.parse(json);
+        }
+        if (where)
+        {
+            $scope.move(where);
+        }
+        else
+        {
+            $scope.locate();
+        }
+    };
+
+    $scope.load();
 }]);
 
 weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', function ($scope, $http, $location, $window)
 {
     var data = [];
 
-    if ($window.localStorage)
+    var json = $window.localStorage.getItem("WhereCtrl.recent");
+    if (json)
     {
-        var json = $window.localStorage.getItem("WhereCtrl.recent");
-        if (json)
-        {
-            data = JSON.parse(json);
-        }
+        data = JSON.parse(json);
     }
 
     $scope.recent = function ()
@@ -201,7 +224,6 @@ weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', f
 
     function save(where)
     {
-        if (!where || !where.name) return;
         for (var i = 0; i < data.length; i++)
         {
             if (where.name === data[i].name)
@@ -215,27 +237,28 @@ weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', f
         {
             data.shift();
         }
-        if ($window.localStorage)
-        {
-            $window.localStorage.setItem("WhereCtrl.recent", JSON.stringify(data));
-        }
+        $window.localStorage.setItem("WhereCtrl.recent", JSON.stringify(data));
     }
 
     $scope.search = function (text)
     {
-        if (text && text.length)
+        return $http.get('/api/search?q=' + encodeURIComponent(text)).then(function (response)
         {
-            return $http.get('/api/search?q=' + encodeURIComponent(text)).then(function (response)
-            {
-                return response.data.places;
-            });
-        }
+            return response.data.places;
+        });
     };
 
     $scope.choose = function (where)
     {
-        save(where);
-        $scope.move(where);
+        if (where)
+        {
+            save(where);
+            $scope.move(where);
+        }
+        else
+        {
+            $scope.locate();
+        }
         $location.path('/radar');
     };
 }]);

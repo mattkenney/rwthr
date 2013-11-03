@@ -1,8 +1,8 @@
 <div class="mw-main">
 <table class="mw-table table table-striped table-bordered table-hover">
 <tbody>
-<tr><td class="mw-label">Location</td><td><span class="mw-loading" ng-hide="place.name">loading...</span>{{place.name}}<a href="#/where" class="btn btn-default btn-xs glyphicon glyphicon-cog mw-config"></a></td></tr>
-<tr><td class="mw-label">Now</td><td><span class="mw-loading" ng-hide="observation.temp_f">loading...</span><span ng-show="observation.temp_f">{{observation.temp_f}} &#176;F</span></td></tr>
+<tr><td class="mw-label">Location</td><td><span class="mw-loading" ng-hide="place.name">loading...</span>{{place.name}}<a href="#/where" class="btn btn-default btn-xs glyphicon glyphicon-cog mw-button"></a></td></tr>
+<tr><td class="mw-label">Now</td><td><span class="mw-loading" ng-hide="observation.temp_f">loading...</span><span ng-show="observation.temp_f">{{observation.temp_f}} &#176;F</span><a href="javascript:void(0)" class="btn btn-default btn-xs glyphicon glyphicon-repeat mw-button" ng-click="load()"></a></td></tr>
 <tr><td class="mw-label">Next 24 hours</td><td><span class="mw-loading" ng-hide="range.temperature">loading...</span><span ng-show="range.temperature">{{range.temperature}} &#176;F,
 {{range.probability_of_precipitation}}% <span title="probability of precipitation">PoP</span></span></td></tr>
 <tr><td class="mw-image" colspan="2">

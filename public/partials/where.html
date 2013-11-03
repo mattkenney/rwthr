@@ -3,22 +3,16 @@
 <div class="col-md-4 col-md-offset-4">
 <div class="well well-small">
 <div class="list-group">
-
 <div class="active list-group-item text-center">
 Location Search
 </div>
-
 <div class="list-group-item">
 <input class="mw-textbox" ng-model="query" placeholder=" enter a location" type="text" typeahead="item.title for item in search($viewValue)" typeahead-on-select="choose($item, $model, $label)" value="" />
 </div>
-
-<a href="javascript:void(0)" class="list-group-item" ng-click="choose(item)" ng-repeat="item in results">
+<a href="javascript:void(0)" class="list-group-item" ng-click="choose(item)" ng-repeat="item in results track by item.name">
 {{ item.title }}
 </a>
-
 </div>
-
-
 <div class="list-group" ng-init="items=recent()">
 <div class="active list-group-item text-center">
 Recent Locations
@@ -26,7 +20,7 @@ Recent Locations
 <a href="javascript:void(0)" class="list-group-item mw-current" ng-click="choose()">
 Current location
 </a>
-<a href="javascript:void(0)" class="list-group-item" ng-click="choose(item)" ng-repeat="item in items">
+<a href="javascript:void(0)" class="list-group-item" ng-click="choose(item)" ng-repeat="item in items track by item.name">
 {{ item.title }}
 </a>
 </div>
