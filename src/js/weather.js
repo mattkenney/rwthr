@@ -23,6 +23,11 @@ weatherApp.config(['$routeProvider', function($routeProvider)
             templateUrl: 'partials/forecast.html',
             controller: 'PacificCtrl'
         })
+        .when('/where',
+        {
+            templateUrl: 'partials/where.html',
+            controller: 'WhereCtrl'
+        })
         .when('/about',
         {
             templateUrl: 'partials/about.html'
@@ -83,16 +88,19 @@ weatherApp.controller('NavBarCtrl', ['$scope', '$location', '$window', function 
 
     updateDiv();
 
-    var lastPath;
-    $scope.$on('$routeChangeSuccess', function(event)
+    if ($window.ga)
     {
-        var path = $location.path();
-        if (lastPath !== path)
+        var lastPath;
+        $scope.$on('$routeChangeSuccess', function(event)
         {
-            lastPath = path;
-            $window.ga('send', 'pageview', path);
-        }
-    });
+            var path = $location.path();
+            if (lastPath !== path)
+            {
+                lastPath = path;
+                $window.ga('send', 'pageview', path);
+            }
+        });
+    }
 }]);
 
 weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
@@ -115,47 +123,120 @@ weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
     };
 }]);
 
-weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $resource)
+weatherApp.controller('WeatherCtrl', ['$scope', '$document', '$resource', function ($scope, $document, $resource)
 {
-    function locate(position)
+    $scope.move = function (where)
     {
-        var radar = '/api/radar';
-        if (position && position.coords)
+        var param = {}
+        ,   radar = '/api/radar'
+        ;
+        if (where && where.lat && where.lon)
         {
-            var where = {
-                lat: position.coords.latitude,
-                lon: position.coords.longitude
+            param.lat = where.lat;
+            param.lon = where.lon;
+            radar += '?lat=' + encodeURIComponent(where.lat);
+            radar += '&lon=' + encodeURIComponent(where.lon);
+        }
+        $scope.place = $resource('/api/place').get(param);
+        $scope.observation = $resource('/api/observation').get(param);
+        $scope.range = $resource('/api/range').get(param);
+        $scope.graph = $resource('/api/graph').get(param);
+        $scope.radar = radar;
+    };
+
+    $scope.locate = function ()
+    {
+        $scope.move();
+
+        if (navigator.geolocation)
+        {
+            function update(position)
+            {
+                if (position && position.coords)
+                {
+                    $scope.$apply(function ()
+                    {
+                        $scope.move({
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude
+                        });
+                    });
+                }
+            }
+            var options = {
+                maximumAge: 30 * 60 * 1000,
+                timeout: 5000
             };
-            radar += '?lat=' + encodeURIComponent(position.coords.latitude);
-            radar += '&lon=' + encodeURIComponent(position.coords.longitude);
+            navigator.geolocation.getCurrentPosition(update, null, options);
         }
+    };
 
-        update = function ()
-        {
-            $scope.place = $resource('/api/place').get(where);
-            $scope.observation = $resource('/api/observation').get(where);
-            $scope.range = $resource('/api/range').get(where);
-            $scope.radar = radar;
-            $scope.graph = $resource('/api/graph').get(where);
-        };
+    $scope.locate();
+}]);
 
-        if (position)
-        {
-            $scope.$apply(update);
-        }
-        else
-        {
-            update();
-        }
-    }
+weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', function ($scope, $http, $location, $window)
+{
+    var data = [];
 
-    locate();
-    if (navigator.geolocation)
+    if ($window.localStorage)
     {
-        var options = {
-            maximumAge: 30 * 60 * 1000,
-            timeout: 5000
-        };
-        navigator.geolocation.getCurrentPosition(locate, null, options);
+        var json = $window.localStorage.getItem("WhereCtrl.recent");
+        if (json)
+        {
+            data = JSON.parse(json);
+        }
     }
+
+    $scope.recent = function ()
+    {
+        var result = data.slice();
+        result.sort(function (a, b)
+        {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        });
+        result.unshift(
+        {
+            title: "Current location"
+        });
+        return result;
+    };
+
+    function save(where)
+    {
+        if (!where || !where.name) return;
+        for (var i = 0; i < data.length; i++)
+        {
+            if (where.name === data[i].name)
+            {
+                data.splice(i, 1);
+                break;
+            }
+        }
+        data.push(where);
+        if (data.length > 5)
+        {
+            data.shift();
+        }
+        if ($window.localStorage)
+        {
+            $window.localStorage.setItem("WhereCtrl.recent", JSON.stringify(data));
+        }
+    }
+
+    $scope.search = function (text)
+    {
+        return $http.get("/api/search?q=" + encodeURIComponent(text)).then(function (response)
+        {
+            return response.data;
+        });
+    };
+
+    $scope.choose = function (where)
+    {
+        save(where);
+        $scope.move(where);
+        $location.path('/radar');
+    };
 }]);

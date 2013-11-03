@@ -1,9 +1,7 @@
 #!/usr/bin/env nodejs
 
-var credentials = require('./credentials'),
-    ejs = require('ejs'),
+var ejs = require('ejs'),
     express = require('express'),
-    flash = require('connect-flash'),
     app = express();
 
 // ***** Initialization *****
@@ -11,41 +9,23 @@ var credentials = require('./credentials'),
 app.enable('trust proxy');
 app.engine('.html', ejs.__express);
 
-//app.set('view cache', false);
+if (app.get('env') !== 'production')
+{
+    app.set('view cache', false);
+}
 app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
 // ***** Middleware *****
 
+if (app.get('env') !== 'production')
+{
+    app.use(express.static('src'));
+}
 app.use(express.static('public'));
-app.use(express.bodyParser());
-app.use(express.cookieParser(credentials.cookie));
-app.use(express.cookieSession());
 app.use(express.logger());
 app.use(express.errorHandler());
-app.use(flash());
-
-// flash support -- we need to call req.flash() just before render()
-app.use(function(req, res, next)
-{
-    var render = res.render;
-    res.render = function (view, locals, callback)
-    {
-        if (typeof callback !== 'function' && typeof locals === 'function')
-        {
-            callback = locals;
-            locals = {};
-        }
-        else if (!locals)
-        {
-            locals = {};
-        }
-        locals.alerts = req.flash();
-        render.call(res, view, locals, callback);
-    };
-    next();
-});
 
 // ***** Controllers *****
 
@@ -83,4 +63,3 @@ app.use(function (err, req, res, next)
 app.listen(app.get('port'));
 
 console.log('Listening on port ' + app.get('port'));
-

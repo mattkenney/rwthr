@@ -85,4 +85,13 @@ module.exports = function (app)
             });
         });
     });
+
+    app.get('/api/search', function (req, res, next)
+    {
+        locator.search(req.query.q, 10, function (err, data)
+        {
+            if (err) return next(err);
+            res.send(data);
+        });
+    });
 };
