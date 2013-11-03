@@ -123,7 +123,7 @@ weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
     };
 }]);
 
-weatherApp.controller('WeatherCtrl', ['$scope', '$document', '$resource', function ($scope, $document, $resource)
+weatherApp.controller('WeatherCtrl', ['$scope', '$resource', function ($scope, $resource)
 {
     $scope.move = function (where)
     {
@@ -196,10 +196,6 @@ weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', f
             if (a.name > b.name) return 1;
             return 0;
         });
-        result.unshift(
-        {
-            title: "Current location"
-        });
         return result;
     };
 
@@ -227,10 +223,13 @@ weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', f
 
     $scope.search = function (text)
     {
-        return $http.get("/api/search?q=" + encodeURIComponent(text)).then(function (response)
+        if (text && text.length)
         {
-            return response.data;
-        });
+            return $http.get('/api/search?q=' + encodeURIComponent(text)).then(function (response)
+            {
+                return response.data.places;
+            });
+        }
     };
 
     $scope.choose = function (where)

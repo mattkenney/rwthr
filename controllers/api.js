@@ -91,7 +91,7 @@ module.exports = function (app)
         locator.search(req.query.q, 10, function (err, data)
         {
             if (err) return next(err);
-            res.send(data);
+            res.send({ places: data });
         });
     });
 };
