@@ -51,12 +51,19 @@ weatherApp.controller('AtlanticCtrl', ['$scope', function ($scope)
 
 weatherApp.controller('FiveDayCtrl', ['$scope', function ($scope)
 {
-    $scope.image =
+    function update()
     {
-        alt: '5 Day',
-        classname: 'mw-graph',
-        src: $scope.graph.url
-    };
+        $scope.image =
+        {
+            alt: '5 Day',
+            classname: 'mw-graph',
+            src: $scope.graph.url
+        };
+    }
+
+    update();
+
+    $scope.$watch('graph.url', update);
 }]);
 
 weatherApp.controller('NavBarCtrl', ['$scope', '$location', '$window', function ($scope, $location, $window)
@@ -115,26 +122,33 @@ weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
 
 weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
 {
-    $scope.image =
+    function update()
     {
-        alt: 'Radar',
-        classname: 'mw-radar',
-        src: $scope.radar
-    };
+        $scope.image =
+        {
+            alt: 'Radar',
+            classname: 'mw-radar',
+            src: $scope.radar
+        };
+    }
+
+    update();
+
+    $scope.$watch('radar', update);
 }]);
 
 weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function ($scope, $resource, $window)
 {
     $scope.move = function (where)
     {
-        var param = {}
-        ,   radar = '/api/radar'
+        var param = { _: Date.now() }
+        ,   radar = '/api/radar?_=' + encodeURIComponent(param._);
         ;
         if (where && where.lat && where.lon)
         {
             param.lat = where.lat;
             param.lon = where.lon;
-            radar += '?lat=' + encodeURIComponent(where.lat);
+            radar += '&lat=' + encodeURIComponent(where.lat);
             radar += '&lon=' + encodeURIComponent(where.lon);
         }
         $scope.place = $resource('/api/place').get(param);
