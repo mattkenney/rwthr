@@ -13,8 +13,8 @@
    height="57"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="logo.svg">
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="icon.svg">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -53,7 +53,7 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1146"
-     inkscape:window-height="801"
+     inkscape:window-height="718"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0" />
@@ -96,13 +96,5 @@
        style="fill:#008000;stroke:none"
        d="m 56.926777,1052.3256 -28.5,-28.5 28.5,0 0,28.5 z"
        id="path3616-6" />
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#cccccc;stroke-opacity:1"
-       id="rect3600"
-       width="57"
-       height="57"
-       x="0"
-       y="-0.098873079"
-       transform="translate(0,995.36218)" />
   </g>
 </svg>
