@@ -1,8 +1,9 @@
 #!/usr/bin/env nodejs
 
-var ejs = require('ejs'),
-    express = require('express'),
-    app = express();
+var ejs = require('ejs')
+,   express = require('express')
+,   app = express()
+;
 
 // ***** Initialization *****
 
@@ -24,8 +25,6 @@ if (app.get('env') !== 'production')
     app.use(express.static('src'));
 }
 app.use(express.static('public'));
-app.use(express.logger());
-app.use(express.errorHandler());
 
 // ***** Controllers *****
 
@@ -41,20 +40,20 @@ app.use(function (req, res, next)
     res.render('404',
     {
         status: 404,
-        url: req.url,
-        user: req.user
+        url: req.url
     });
 });
 
 // pretty error page
 app.use(function (err, req, res, next)
 {
+    console.error(err.stack);
     res.status(500);
     res.render('500',
     {
         status: err.status || 500,
         error: err.message,
-        user: req.user
+        stack: (app.get('env') === 'production') ? '' : err.stack
     });
 });
 

@@ -8,6 +8,7 @@
 body{font-family:sans-serif;text-align:center;}
 h1{color:#333;font-size:36px;font-weight:500;margin-top:70px;}
 p{color:#666;font-size:14px;}
+pre{text-align:left;}
 </style>
 </head>
 <body>
@@ -15,5 +16,6 @@ p{color:#666;font-size:14px;}
 <p>Something went wrong.</p>
 <p><%=status%> - <%=error%></p>
 <form action="/"><input type="submit" value="OK" /></form>
+<pre><%=stack%></pre>
 </body>
 </html>
