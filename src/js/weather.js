@@ -137,8 +137,13 @@ weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
     $scope.$watch('radar', update);
 }]);
 
-weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function ($scope, $resource, $window)
+weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$location', function ($scope, $resource, $window, $location)
 {
+    $scope.go = function (path)
+    {
+        $location.path(path);
+    };
+
     $scope.move = function (where)
     {
         var param = { _: Date.now() }
@@ -171,7 +176,7 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function
     {
         $scope.move();
 
-        if (navigator.geolocation)
+        if ($window.navigator && $window.navigator.geolocation)
         {
             function update(position)
             {
@@ -190,7 +195,7 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function
                 maximumAge: 30 * 60 * 1000,
                 timeout: 5000
             };
-            navigator.geolocation.getCurrentPosition(update, null, options);
+            $window.navigator.geolocation.getCurrentPosition(update, null, options);
         }
     };
 
@@ -212,6 +217,11 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', function
     };
 
     $scope.load();
+
+    $window.setInterval(function ()
+    {
+        $scope.$apply($scope.load);
+    }, 5*60*1000);
 }]);
 
 weatherApp.controller('WhereCtrl', ['$scope', '$http', '$location', '$window', function ($scope, $http, $location, $window)
