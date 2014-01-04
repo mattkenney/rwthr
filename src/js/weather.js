@@ -57,7 +57,7 @@ weatherApp.controller('FiveDayCtrl', ['$scope', function ($scope)
         {
             alt: '5 Day',
             classname: 'mw-graph',
-            src: $scope.graph.url
+            src: $scope.graph
         };
     }
 
@@ -147,7 +147,8 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$locati
     $scope.move = function (where)
     {
         var param = { _: Date.now() }
-        ,   radar = '/api/radar?_=' + encodeURIComponent(param._);
+        ,   radar = '/api/radar?_=' + encodeURIComponent(param._)
+        ,   graph = '/api/graph?_=' + encodeURIComponent(param._)
         ;
         if (where && where.lat && where.lon)
         {
@@ -155,11 +156,13 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$locati
             param.lon = where.lon;
             radar += '&lat=' + encodeURIComponent(where.lat);
             radar += '&lon=' + encodeURIComponent(where.lon);
+            graph += '&lat=' + encodeURIComponent(where.lat);
+            graph += '&lon=' + encodeURIComponent(where.lon);
         }
         $scope.place = $resource('/api/place').get(param);
         $scope.observation = $resource('/api/observation').get(param);
         $scope.range = $resource('/api/range').get(param);
-        $scope.graph = $resource('/api/graph').get(param);
+        $scope.graph = graph;
         $scope.radar = radar;
 
         if (where && where.name)

@@ -37,6 +37,7 @@ module.exports = function (app)
             weather.graph(data, function (err, data)
             {
                 if (err) return next(err);
+                res.setHeader("Content-Type", "image/svg+xml");
                 res.send(data);
             });
         });
