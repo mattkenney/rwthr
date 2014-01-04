@@ -66,6 +66,16 @@ body{padding-top:64px;}
 </div>
 </div>
 </div>
+<noscript>
+<div class="container"><div class="alert alert-danger">
+To use this site, please enable JavaScript in your browser.
+</div></div>
+</noscript>
+<!--[if lte IE 8]>
+<div class="container"><div class="alert alert-warning">
+Your browser is out of date. Some features of this site will not work. You should upgrade.
+</div></div>
+<![endif]-->
 <div ng-view=""></div>
 <% if (production) { %>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
