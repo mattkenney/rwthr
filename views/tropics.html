@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Atlantic</title>
+<style type="text/css">
+body{
+margin:0;
+}
+path.lin
+{
+fill:none;
+stroke:#000;
+stroke-opacity:0.3;
+}
+path.pgn
+{
+fill:#fff;
+fill-opacity:0.3;
+}
+path.pts
+{
+fill-opacity:0.3;
+}
+path.wwlin
+{
+stroke:#f00;
+}
+text.pts
+{
+fill:#444;
+font-family:sans-serif;
+}
+.mw-tropics{height:300px;width:600px;}
+@media/*!*/(max-width:599px)
+{
+.mw-tropics{height:150px;width:300px;}
+}
+</style>
+</head>
+<body>
+<svg class="mw-tropics" id="svg" viewBox="0 0 600 300"></svg>
+<% if (production) { %>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+<% include ../public/js/tropics.js %>
+/*]]>*/
+</script>
+<% } else { %>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
+<script src="/js/tropics.js"></script>
+<% } %>
+</body>
+</html>

@@ -1,0 +1,67 @@
+#!/usr/bin/env nodejs
+
+var fs = require('fs')
+,   d3 = require('d3')
+,   topojson = require('topojson')
+;
+
+function base()
+{
+    var svg = d3.select('body').append('svg');
+
+    svg
+        .attr('width', '600')
+        .attr('height', '300')
+        .attr('viewBox', '0 0 600 300')
+        ;
+
+    svg.append('rect')
+        .attr('width', '600')
+        .attr('height', '300')
+        .attr('stroke', 'none')
+        .attr('fill', '#acf')
+        ;
+
+    return svg;
+};
+
+function topo2svg(topo, stroke, fill)
+{
+    for (var key in topo.objects)
+    {
+        if (!topo.objects.hasOwnProperty(key)) continue;
+        var features = topojson.feature(topo, topo.objects[key]);
+        svg
+            .append('path')
+            .datum(features)
+            .attr('d', path)
+            .attr('stroke', stroke)
+            .attr('fill', fill)
+            ;
+    }
+}
+
+var projection = d3.geo.mercator()
+        .center([-55, 30])
+        .translate([300, 150])
+        .scale(300.0)
+,   path = d3.geo.path().projection(projection)
+,   worldJson = fs.readFileSync('world_country_admin_boundary_shapefile_with_fips_codes.json', {encoding: 'utf8'})
+,   worldTopo = JSON.parse(worldJson)
+,   usJson = fs.readFileSync('tl_2013_us_state.json', {encoding: 'utf8'})
+,   usTopo = JSON.parse(usJson)
+;
+
+var svg = base();
+topo2svg(worldTopo, '#bc9', '#cda');
+topo2svg(usTopo, '#ccc', 'none');
+
+fs.writeFileSync('atlantic.svg', svg[0][0].outerHTML);
+
+projection.center([-130, 30]);
+
+var svg = base();
+topo2svg(worldTopo, '#bc9', '#cda');
+topo2svg(usTopo, '#ccc', 'none');
+
+fs.writeFileSync('pacific.svg', svg[0][0].outerHTML);

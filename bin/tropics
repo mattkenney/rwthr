@@ -1,0 +1,30 @@
+#!/bin/sh
+# see http://www.nhc.noaa.gov/gis/ for details
+feeds="http://www.nhc.noaa.gov/gis-at.xml http://www.nhc.noaa.gov/gis-ep.xml"
+# test URLs:
+#feeds="http://www.nhc.noaa.gov/rss_examples/gis-at-20130605.xml http://www.nhc.noaa.gov/rss_examples/gis-ep-20130530.xml"
+unset CDPATH
+home="$( cd "$( dirname "$0" )" && pwd )"
+zips=$( "$home/getlinks" $feeds | egrep '_best_track_latest.zip$' )
+if [ -z "$zips" ]
+then
+    echo '{"type":"Topology","objects":{},"arcs":[]}' > "$home/../public/data/tropics.json"
+    exit 0
+fi
+wd="$( pwd )"
+scratch=$(mktemp --directory)
+cd "$scratch"
+for url in $zips
+do
+    wget --quiet feeds "$url"
+done
+unzip -qqq '*.zip'
+"$home/../node_modules/topojson/bin/topojson" -p -o tropics.json *.shp 2> topojson.log
+cd "$wd"
+if [ -e "$scratch/tropics.json" ]
+then
+    cp "$scratch/tropics.json" "$home/../public/data"
+    rm -Rf "$scratch"
+else
+    cat "$scratch/topojson.log"
+fi

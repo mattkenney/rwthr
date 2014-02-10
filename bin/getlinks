@@ -1,0 +1,32 @@
+#!/usr/bin/env nodejs
+
+var FeedParser = require('feedparser')
+,   request = require('request')
+,   feeds = process.argv.slice(2)
+;
+
+if (!feeds.length)
+{
+    console.error('usage: getlinks URL');
+    process.exit(1);
+}
+
+function fetch()
+{
+    if (!feeds.length) return;
+    request(feeds.shift())
+        .pipe(new FeedParser())
+        .on('data', function(data)
+        {
+            if (data && data.link)
+            {
+                console.log(data.link);
+            }
+        })
+        .on('end', function()
+        {
+            fetch();
+        });
+}
+
+fetch();
