@@ -7,4 +7,12 @@ module.exports = function (app)
             production: (app.get('env') == 'production')
         });
     });
+
+    app.get('/tropics', function (req, res)
+    {
+        res.render('tropics',
+        {
+            production: (app.get('env') == 'production')
+        });
+    });
 };

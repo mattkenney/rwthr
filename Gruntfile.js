@@ -6,7 +6,8 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'public/js/weather.js': ['src/js/*.js']
+          'public/js/weather.js': ['src/js/weather.js'],
+          'public/js/tropics.js': ['src/js/tropics.js']
         }
       }
     }

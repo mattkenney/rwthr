@@ -15,12 +15,12 @@ weatherApp.config(['$routeProvider', function($routeProvider)
         })
         .when('/atlantic',
         {
-            templateUrl: 'partials/forecast.html',
+            templateUrl: 'partials/tropics.html',
             controller: 'AtlanticCtrl'
         })
         .when('/pacific',
         {
-            templateUrl: 'partials/forecast.html',
+            templateUrl: 'partials/tropics.html',
             controller: 'PacificCtrl'
         })
         .when('/where',
@@ -41,12 +41,7 @@ weatherApp.config(['$routeProvider', function($routeProvider)
 
 weatherApp.controller('AtlanticCtrl', ['$scope', function ($scope)
 {
-    $scope.image =
-    {
-        alt: 'Atlantic outlook',
-        classname: 'mw-tropic',
-        src: 'http://www.nhc.noaa.gov/tafb_latest/danger_atl_latestBW_sm2.gif'
-    };
+    $scope.src = '/tropics';
 }]);
 
 weatherApp.controller('FiveDayCtrl', ['$scope', function ($scope)
@@ -112,12 +107,7 @@ weatherApp.controller('NavBarCtrl', ['$scope', '$location', '$window', function 
 
 weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
 {
-    $scope.image =
-    {
-        alt: 'Pacific outlook',
-        classname: 'mw-tropic',
-        src: 'http://www.nhc.noaa.gov/tafb_latest/danger_pac_latestBW_sm2.gif'
-    };
+    $scope.src = '/tropics#pacific';
 }]);
 
 weatherApp.controller('RadarCtrl', ['$scope', function ($scope)

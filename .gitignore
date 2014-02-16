@@ -1,2 +1,7 @@
 *.bak
 *~
+# dev dependencies that do not get deployed:
+node_modules/d3/**
+node_modules/grunt/**
+node_modules/grunt-cli/**
+node_modules/grunt-contrib-uglify/**

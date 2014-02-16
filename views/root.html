@@ -32,13 +32,13 @@ body{padding-top:64px;}
 .mw-offsite{white-space:nowrap;}
 .mw-radar{height:550px;margin:-10px;width:600px;}
 .mw-textbox{width:100%;}
-.mw-tropic{border:1px solid #ddd;height:402px;margin:39px;width:502px;}
+.mw-tropics{height:300px;margin:-10px -10px -13px;width:600px;}
 @media/*!*/(max-width:767px)
 {
 .mw-graph{height:250px;margin:-7px;width:296px;}
 .mw-main{width:300px;}
 .mw-radar{height:275px;margin:-9px;width:300px;}
-.mw-tropic{height:202px;margin:14px;width:252px;}
+.mw-tropics{height:150px;margin:-9px -9px -13px;width:300px;}
 }
 </style>
 </head>
@@ -83,6 +83,11 @@ Your browser is out of date. Some features of this site will not work. You shoul
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript">
+/*<![CDATA[*/
+<% include ../public/js/weather.js %>
+/*]]>*/
+</script>
+<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -94,7 +99,7 @@ ga('create', 'UA-41221215-2', 'mwthr.com');
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-resource.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.js"></script>
-<% } %>
 <script src="/js/weather.js"></script>
+<% } %>
 </body>
 </html>
