@@ -7,7 +7,7 @@ var ejs = require('ejs')
 
 // ***** Initialization *****
 
-app.disable('x-powered-by');
+app.disable('X-Powered-By');
 app.enable('trust proxy');
 app.engine('.html', ejs.__express);
 
