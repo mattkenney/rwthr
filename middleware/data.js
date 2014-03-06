@@ -9,7 +9,7 @@ module.exports = function (app)
         ,   expiration = new Date(Math.ceil((now - offset) / interval) * interval + offset)
         ,   maxAge = Math.round((expiration.getTime() - now) / 1000)
         ;
-        res.set('Cache-Control', 'private, max-age=' + maxAge);
+        res.set('Cache-Control', 'public, max-age=' + maxAge);
         next();
     });
 };
