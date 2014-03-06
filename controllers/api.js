@@ -5,6 +5,12 @@ var geoip = require('../lib/geoip')
 
 module.exports = function (app)
 {
+    app.use('/api/', function(req, res, next)
+    {
+        res.set('Cache-Control', 'private, max-age=0');
+        next();
+    });
+
     app.use('/api/', geoip);
 
     app.get('/api/county', function (req, res)
