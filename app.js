@@ -21,12 +21,11 @@ app.set('views', __dirname + '/views');
 
 // ***** Middleware *****
 
-require('./middleware/data')(app);
 if (app.get('env') !== 'production')
 {
     app.use(express.static('src'));
 }
-app.use(express.static('public', { maxAge: 24*60*60*1000 }));
+app.use(express.static('public'));
 
 // ***** Controllers *****
 
