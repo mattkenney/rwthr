@@ -23,7 +23,10 @@ body{padding-top:64px;}
 .mw-current{font-style:italic;}
 .mw-icon{height:80px;text-align:center;width:80px;}
 .mw-image{overflow:hidden;width:580px;}
+.mw-image-div{position:relative;}
 .mw-image-loading{height:500px;width:580px;}
+.mw-image-status{background-color:#777;border-bottom:1px solid #000;font-size:10px;height:16px;position:absolute;right:-8px;text-align:center;top:-8px;width:57px;}
+.mw-image-status>a,.mw-image-status>a:focus,.mw-image-status>a:hover{color:#fff;}
 .mw-graph{height:550px;margin:-10px;width:600px;}
 .mw-label:after{content:":";}
 .mw-label{text-align:right;width:8.5em;}
@@ -78,10 +81,10 @@ Your browser is out of date. Some features of this site will not work. You shoul
 <![endif]-->
 <div ng-view=""></div>
 <% if (production) { %>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-resource.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 <% include ../public/js/weather.js %>
@@ -95,10 +98,10 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-41221215-2', 'mwthr.com');
 </script>
 <% } else { %>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-resource.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
 <script src="/js/weather.js"></script>
 <% } %>
 </body>

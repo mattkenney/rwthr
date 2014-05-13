@@ -5,7 +5,7 @@ weatherApp.config(['$routeProvider', function($routeProvider)
     $routeProvider
         .when('/radar',
         {
-            templateUrl: 'partials/forecast.html',
+            templateUrl: 'partials/radar.html',
             controller: 'RadarCtrl'
         })
         .when('/fiveday',
