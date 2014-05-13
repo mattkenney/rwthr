@@ -1,0 +1,20 @@
+<div class="mw-main">
+<table class="mw-table table table-striped table-bordered table-hover">
+<tbody>
+<tr ng-click="go('/where')"><td class="mw-label">Location</td><td><span class="mw-loading" ng-hide="place.name">loading...</span>{{place.name}}<a href="javascript:void(0)" class="btn btn-default btn-xs glyphicon glyphicon-cog mw-button"></a></td></tr>
+<tr ng-click="load()"><td class="mw-label">Now</td><td><span class="mw-loading" ng-hide="observation.temp_f">loading...</span><span ng-show="observation.temp_f">{{observation.temp_f}} &#176;F</span><a href="javascript:void(0)" class="btn btn-default btn-xs glyphicon glyphicon-repeat mw-button"></a></td></tr>
+<tr ng-click="go('/fiveday')"><td class="mw-label">Next 24 hours</td><td><span class="mw-loading" ng-hide="range.temperature">loading...</span>
+<span ng-show="range.temperature">{{range.temperature}} &#176;F,
+<span ng-hide="range.snow">{{range.probability_of_precipitation}}% <span title="probability of precipitation">PoP</span></span>
+<span ng-show="range.snow">{{range.snow}}" of snow</span>
+</span>
+</td></tr>
+<tr><td class="mw-image" colspan="2">
+<div class="mw-image-div">
+<div class="mw-image-status"><a href="http://weather.noaa.gov/monitor/radar3/" target="_blank">status</a></div>
+<img alt="{{image.alt}}" class="mw-image-loading" ng-class="image.classname" ng-src="{{image.src}}" src="/images/loading.png" />
+</div>
+</td></tr>
+</tbody>
+</table>
+</div>
