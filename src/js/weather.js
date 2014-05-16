@@ -127,6 +127,25 @@ weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
     $scope.$watch('radar', update);
 }]);
 
+weatherApp.controller('RadarChoiceCtrl', ['$scope', '$resource', function ($scope, $resource)
+{
+    function update()
+    {
+        $scope.radars = $resource('/api/radars').get($scope.param);
+    }
+
+    $scope.toggle = function ($event)
+    {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.isopen = !$scope.isopen;
+    };
+
+    update();
+
+    $scope.$watch('radar', update);
+}]);
+
 weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$location', function ($scope, $resource, $window, $location)
 {
     $scope.go = function (path)
@@ -136,22 +155,22 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$locati
 
     $scope.move = function (where)
     {
-        var param = { _: Date.now() }
-        ,   radar = '/api/radar?_=' + encodeURIComponent(param._)
-        ,   graph = '/api/graph?_=' + encodeURIComponent(param._)
+        $scope.param = { _: Date.now() };
+        var radar = '/api/radar?_=' + encodeURIComponent($scope.param._)
+        ,   graph = '/api/graph?_=' + encodeURIComponent($scope.param._)
         ;
         if (where && where.lat && where.lon)
         {
-            param.lat = where.lat;
-            param.lon = where.lon;
+            $scope.param.lat = where.lat;
+            $scope.param.lon = where.lon;
             radar += '&lat=' + encodeURIComponent(where.lat);
             radar += '&lon=' + encodeURIComponent(where.lon);
             graph += '&lat=' + encodeURIComponent(where.lat);
             graph += '&lon=' + encodeURIComponent(where.lon);
         }
-        $scope.place = $resource('/api/place').get(param);
-        $scope.observation = $resource('/api/observation').get(param);
-        $scope.range = $resource('/api/range').get(param);
+        $scope.place = $resource('/api/place').get($scope.param);
+        $scope.observation = $resource('/api/observation').get($scope.param);
+        $scope.range = $resource('/api/range').get($scope.param);
         $scope.graph = graph;
         $scope.radar = radar;
 

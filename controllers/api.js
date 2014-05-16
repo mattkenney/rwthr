@@ -80,6 +80,16 @@ module.exports = function (app)
         });
     });
 
+    app.get('/api/radars', function (req, res, next)
+    {
+        locator.radar(req.query, 5, function (err, data)
+        {
+            if (err) return next(err);
+            data.sort(function (a, b) { return (a[1] - b[1]); });
+            res.send({ radars: data });
+        });
+    });
+
     app.get('/api/range', function (req, res, next)
     {
         locator.forecast(req.query, function (err, data)

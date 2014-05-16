@@ -10,9 +10,19 @@
 </span>
 </td></tr>
 <tr><td class="mw-image" colspan="2">
-<div class="mw-image-div">
-<div class="mw-image-status"><a href="http://weather.noaa.gov/monitor/radar3/" target="_blank">status</a></div>
-<img alt="{{image.alt}}" class="mw-image-loading" ng-class="image.classname" ng-src="{{image.src}}" src="/images/loading.png" />
+<div class="mw-image-div" ng-controller="RadarChoiceCtrl">
+<div class="mw-image-change">
+<a href="javascript:void(0)" class="mw-image-a" ng-click="toggle($event)">change</a>
+<div class="btn-group" dropdown="" is-open="isopen">
+<ul class="dropdown-menu" role="menu">
+<li ng-repeat="radar in radars.radars">
+<a href="javascript:void(0)" ng-click="image.src=radar[0].url">{{radar[0].name}}</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="mw-image-status"><a href="http://weather.noaa.gov/monitor/radar3/" class="mw-image-a" target="_blank">status</a></div>
+<img alt="{{image.alt}}" class="mw-image-loading" ng-class="image.classname" ng-click="toggle($event)" ng-src="{{image.src}}" src="/images/loading.png" />
 </div>
 </td></tr>
 </tbody>
