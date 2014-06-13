@@ -48,7 +48,7 @@ d3.json('/data/tropics.json', function(error, topo)
             if (classname === 'pts')
             {
                 svg.append('text')
-                    .datum(feature.features[0])
+                    .datum(feature.features[feature.features.length - 1])
                     .attr('class', classname)
                     .attr('transform', function(d) { return 'translate(' + path.centroid(d) + ')'; })
                     .attr('dx', '0.5ex')
