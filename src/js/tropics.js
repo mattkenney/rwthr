@@ -47,14 +47,24 @@ d3.json('/data/tropics.json', function(error, topo)
                 ;
             if (classname === 'pts')
             {
-                svg.append('text')
-                    .datum(feature.features[feature.features.length - 1])
-                    .attr('class', classname)
-                    .attr('transform', function(d) { return 'translate(' + path.centroid(d) + ')'; })
-                    .attr('dx', '0.5ex')
-                    .attr('dy', '0.5ex')
-                    .text(function(d) { return d.properties.STORMNAME; })
+                for (var i = 0; i < feature.features.length; i++)
+                {
+                    var d = feature.features[i]
+                    ,   type = d && d.properties && d.properties.STORMTYPE
                     ;
+                    if ((/(^TS)|(^Tropical Storm)|(^HC)|(^Hurricane)/i).test(type))
+                    {
+                        svg.append('text')
+                            .datum(d)
+                            .attr('class', classname)
+                            .attr('transform', function(d) { return 'translate(' + path.centroid(d) + ')'; })
+                            .attr('dx', '0.5ex')
+                            .attr('dy', '0.5ex')
+                            .text(function(d) { return d.properties.STORMNAME; })
+                            ;
+                        break;
+                    }
+                }
             }
             activity = activity || (key.substring(0, 2) === basin);
         }
