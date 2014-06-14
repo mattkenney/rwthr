@@ -52,7 +52,7 @@ d3.json('/data/tropics.json', function(error, topo)
                     var d = feature.features[i]
                     ,   type = d && d.properties && d.properties.STORMTYPE
                     ;
-                    if ((/(^TS)|(^Tropical Storm)|(^HC)|(^Hurricane)/i).test(type))
+                    if ((/(^TS)|(^Tropical Storm)|(^HU)/i).test(type))
                     {
                         svg.append('text')
                             .datum(d)
