@@ -47,7 +47,7 @@ d3.json('/data/tropics.json', function(error, topo)
                 ;
             if (classname === 'pts')
             {
-                for (var i = 0; i < feature.features.length; i++)
+                for (var i = feature.features.length - 1; i >= 0; i--)
                 {
                     var d = feature.features[i]
                     ,   type = d && d.properties && d.properties.STORMTYPE
