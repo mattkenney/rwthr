@@ -5,7 +5,7 @@ feeds="http://www.nhc.noaa.gov/gis-at.xml http://www.nhc.noaa.gov/gis-ep.xml"
 #feeds="http://www.nhc.noaa.gov/rss_examples/gis-at-20130605.xml http://www.nhc.noaa.gov/rss_examples/gis-ep-20130530.xml"
 unset CDPATH
 home="$( cd "$( dirname "$0" )" && pwd )"
-zips=$( "$home/getlinks" $feeds | egrep '((/ep......_5day_...)|(_best_track_latest)).zip$' )
+zips=$( "$home/getlinks" $feeds | egrep '((/ep......_5day_...)|(_best_track((_latest)?)).zip$' )
 if [ -z "$zips" ]
 then
     echo '{"type":"Topology","objects":{},"arcs":[]}' > "$home/../public/data/tropics.json"
