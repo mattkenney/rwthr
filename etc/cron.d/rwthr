@@ -1,0 +1,2 @@
+# m h dom mon dow user command
+9 0,3,6,9,12,15,18,21 * * * www-data /usr/bin/nice -n 40 /bin/sh /home/ubuntu/rwthr/bin/tropics 2>&1 | logger -i -t rwthr
