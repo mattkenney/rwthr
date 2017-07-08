@@ -16,9 +16,9 @@ scratch=$(mktemp --directory)
 cd "$scratch"
 for url in $zips
 do
-    wget --quiet feeds "$url"
+    wget --quiet "$url"
 done
-unzip -qqq '*.zip'
+unzip -n -qqq '*.zip'
 "$home/../node_modules/topojson/bin/topojson" -p -o tropics.json *.shp 2> topojson.log
 cd "$wd"
 if [ -e "$scratch/tropics.json" ]
