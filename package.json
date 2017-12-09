@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "main": "app.js",
   "license": "AGPL-3.0",
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/mattkenney/rwthr.git"
   },
@@ -18,7 +17,7 @@
     "async": "^0.2.9",
     "connect-flash": "^0.1.1",
     "csv": "^0.3.6",
-    "ejs": "^0.8.4",
+    "ejs": "^2.5.7",
     "express": "^3.4.2",
     "feedparser": "^0.16.5",
     "geoip-lite": "^1.1.1",
