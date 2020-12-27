@@ -112,34 +112,14 @@ weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
 
 weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
 {
+    var map = L.map('mapid');
+    L.tileLayer(mwthr.base.url, mwthr.base.options).addTo(map);
+    L.tileLayer.wms(mwthr.radar.url, mwthr.radar.options).addTo(map);
+
     function update()
     {
-        $scope.image =
-        {
-            alt: 'Radar',
-            classname: 'mw-radar',
-            src: $scope.radar
-        };
+        map.setView([$scope.lat, $scope.lon], 8);
     }
-
-    update();
-
-    $scope.$watch('radar', update);
-}]);
-
-weatherApp.controller('RadarChoiceCtrl', ['$scope', '$resource', function ($scope, $resource)
-{
-    function update()
-    {
-        $scope.radars = $resource('/api/radars').get($scope.param);
-    }
-
-    $scope.toggle = function ($event)
-    {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.isopen = !$scope.isopen;
-    };
 
     update();
 
@@ -159,8 +139,12 @@ weatherApp.controller('WeatherCtrl', ['$scope', '$resource', '$window', '$locati
         var radar = '/api/radar?_=' + encodeURIComponent($scope.param._)
         ,   graph = '/api/graph?_=' + encodeURIComponent($scope.param._)
         ;
+        $scope.lat = 40;
+        $scope.lon = -75;
         if (where && where.lat && where.lon)
         {
+            $scope.lat = where.lat;
+            $scope.lon = where.lon;
             $scope.param.lat = where.lat;
             $scope.param.lon = where.lon;
             radar += '&lat=' + encodeURIComponent(where.lat);
