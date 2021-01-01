@@ -110,11 +110,39 @@ weatherApp.controller('PacificCtrl', ['$scope', function ($scope)
     $scope.src = '/tropics#pacific';
 }]);
 
-weatherApp.controller('RadarCtrl', ['$scope', function ($scope)
+weatherApp.controller('RadarCtrl', ['$scope', '$document', function ($scope, $document)
 {
-    var map = L.map('mapid');
+    function updateLastVisibility()
+    {
+        if ($document.prop('visibilityState') === 'visible')
+        {
+            $scope.lastVisibility = Date.now();
+            if ($scope.layer)
+            {
+                $scope.layer.setParams({ _: $scope.lastVisibility });
+            }
+        }
+    }
+
+    $document.on('visibilitychange', updateLastVisibility);
+    $scope.$on("$destroy", function ()
+    {
+        if ($scope.map)
+        {
+            $scope.map.remove();
+        }
+        $document.off('visibilitychange', updateLastVisibility);
+    });
+
+    updateLastVisibility();
+
+    var map = $scope.map = L.map('mapid');
     L.tileLayer(mwthr.base.url, mwthr.base.options).addTo(map);
-    L.tileLayer.wms(mwthr.radar.url, mwthr.radar.options).addTo(map);
+    $scope.layer = L.tileLayer
+        .wms(mwthr.radar.url, mwthr.radar.options)
+        .setParams({ _: $scope.lastVisibility })
+        .addTo(map);
+        ;
 
     function update()
     {
