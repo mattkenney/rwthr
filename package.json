@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "d3": "^3.4.1",
-    "grunt": "^0.4.1",
+    "grunt": "^0.4.5",
     "grunt-cli": "^0.1.9",
     "grunt-contrib-uglify": "^0.2.2"
   },

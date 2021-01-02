@@ -137,10 +137,25 @@ weatherApp.controller('RadarCtrl', ['$scope', '$document', function ($scope, $do
     updateLastVisibility();
 
     var map = $scope.map = L.map('mapid');
+
     L.tileLayer(mwthr.base.url, mwthr.base.options).addTo(map);
     $scope.layer = L.tileLayer
         .wms(mwthr.radar.url, mwthr.radar.options)
         .setParams({ _: $scope.lastVisibility })
+        .on('loading', function ()
+        {
+            $scope.$evalAsync(function (scope)
+            {
+                scope.loading = true;
+            });
+        })
+        .on('load', function ()
+        {
+            $scope.$evalAsync(function (scope)
+            {
+                scope.loading = false;
+            });
+        })
         .addTo(map);
         ;
 
