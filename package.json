@@ -14,7 +14,7 @@
     "grunt-contrib-uglify": "^0.2.2"
   },
   "dependencies": {
-    "async": "^0.2.9",
+    "async": "^2.6.4",
     "connect-flash": "^0.1.1",
     "csv": "^0.3.6",
     "ejs": "^2.5.7",
